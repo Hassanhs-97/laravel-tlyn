@@ -19,7 +19,7 @@ class OrderResource extends JsonResource
         return [
             'id'           => $this->id,
             'type'         => Order::TYPE_TEXT[$this->type] ?? __('undefined'),
-            'amount'       => intval($this->amount),
+            'amount'       => $this->amount,
             'price'        => rial_to_toman($this->price),
             'status'       => Order::STATUS_TEXT[$this->status] ?? __('undefined'),
             'transactions' => new OrderTransactionResourceCollection($this->orderTransactions),

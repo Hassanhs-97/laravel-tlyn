@@ -37,7 +37,9 @@ class OrderController extends Controller
         $order = $this->orderRepositoey->createOrder($request->validated());
 
         if ($order) {
-            (new \App\Jobs\OrderMatchJob())->dispatch();
+            (new \App\Jobs\OrderMatchJob())
+                ->delay(now()->addSeconds(5))
+                ->dispatch();
         }
 
         if ($order) {

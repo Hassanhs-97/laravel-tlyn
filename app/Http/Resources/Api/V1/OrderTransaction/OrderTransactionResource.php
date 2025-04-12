@@ -17,7 +17,7 @@ class OrderTransactionResource extends JsonResource
     {
         return [
             'id'         => $this->id,
-            'amount'     => intval($this->amount),
+            'amount'     => $this->amount,
             'price'      => rial_to_toman($this->price),
             'created_at' => verta($this->created_at, 'Asia/Tehran')->format('Y/m/d H:i'),
         ];

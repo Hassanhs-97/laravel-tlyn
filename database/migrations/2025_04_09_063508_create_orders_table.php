@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('description')->nullable();
             $table->softDeletes();
             $table->timestamps();
-            $table->index(['user_id', 'type', 'status']);
+            $table->index(['type', 'status']);
         });
     }
 
