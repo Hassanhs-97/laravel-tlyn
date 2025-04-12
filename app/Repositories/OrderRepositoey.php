@@ -17,7 +17,7 @@ class OrderRepositoey
 
     public function getOrderById($id)
     {
-        $order = Order::where('user_id', Auth::id())->find($id);
+        $order = Order::where('user_id', Auth::id())->lockforUpdate()->find($id);
 
         if ($order) {
             return $order;
