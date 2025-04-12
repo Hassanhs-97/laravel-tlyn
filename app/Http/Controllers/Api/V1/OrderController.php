@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\v1\Order\OrderStoreRequest;
 use App\Http\Requests\Api\v1\Order\OrderUpdateRequest;
 use App\Http\Resources\Api\V1\Order\OrderResourceCollection;
-use App\Http\Resources\Api\V1\OrderResource;
+use App\Http\Resources\Api\V1\Order\OrderResource;
 use App\Repositories\OrderRepositoey;
 use Symfony\Component\HttpFoundation\Response;
 
