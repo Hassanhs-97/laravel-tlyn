@@ -105,13 +105,15 @@ class OrderRepository
 
                             $fee = (new FeeService)::calculateFee($tradable, $order->price);
 
-                            $this->orderTransactionRepository->createOrder([
+                            $orderTransaction = $this->orderTransactionRepository->createOrder([
                                 'buy_order_id'  => $order->type === Order::TYPE_BUY ? $order->id : $matchOrder->id,
                                 'sell_order_id' => $order->type === Order::TYPE_SELL ? $order->id : $matchOrder->id,
                                 'amount'        => $tradable,
                                 'price'         => $order->price,
                                 'fee'           => $fee,
                             ]);
+
+                            \App\Jobs\UpdateUserGoldBalance::dispatch($orderTransaction);
 
                             $remaining -= $tradable;
 
