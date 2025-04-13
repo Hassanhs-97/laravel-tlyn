@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Api\v1\Order;
 
+use App\Rules\SufficientGoldBalance;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -27,7 +28,12 @@ class OrderStoreRequest extends FormRequest
                 \App\Models\Order::TYPE_BUY,
                 \App\Models\Order::TYPE_SELL,
             ])],
-            'amount'      => 'required|numeric|min:0.001',
+            'amount'      => [
+                'required',
+                'numeric',
+                'min:0.001',
+                new SufficientGoldBalance($this->input('amount')),
+            ],
             'price'       => 'required|numeric|min:0',
             'description' => 'nullable|string|max:255',
         ];
