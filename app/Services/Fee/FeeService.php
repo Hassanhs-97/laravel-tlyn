@@ -5,6 +5,7 @@ namespace App\Services\Fee;
 class FeeService
 {
     const MIN_FEE = 500000;
+    const MAX_FEE = 50000000;
 
     public static function calculateFee(int|float $amount, int|float $price): int
     {
@@ -12,7 +13,7 @@ class FeeService
         $percent    = self::getFeePercent($amount);
         $fee        = ($totalPrice * $percent) / 100;
 
-        return max((int) $fee, self::MIN_FEE);
+        return (int) min(max($fee, self::MIN_FEE), self::MAX_FEE);
     }
 
     private static function getFeePercent(float $amount): float
