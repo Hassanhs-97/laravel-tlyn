@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('sell_order_id')->constrained('orders')->onDelete('cascade');
             $table->decimal('amount', 12, 3); // in grams
             $table->decimal('price', 15, 0);
+            $table->unsignedBigInteger('fee')->default(0);
             $table->softDeletes();
             $table->timestamps();
         });

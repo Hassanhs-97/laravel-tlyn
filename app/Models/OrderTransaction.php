@@ -14,6 +14,7 @@ class OrderTransaction extends Model
         'sell_order_id',
         'amount',
         'price',
+        'fee',
     ];
 
     public function buyOrder()

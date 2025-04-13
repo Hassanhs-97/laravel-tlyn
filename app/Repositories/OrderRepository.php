@@ -3,10 +3,12 @@
 namespace App\Repositories;
 
 use App\Models\Order;
+use App\Services\Fee\FeeCalculatorInterface;
+use App\Services\Fee\FeeService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
-class OrderRepositoey
+class OrderRepository
 {
     public function __construct(public OrderTransactionRepository $orderTransactionRepository) {}
 
@@ -101,11 +103,14 @@ class OrderRepositoey
 
                             $tradable = min($remaining, $matchRemaining);
 
+                            $fee = (new FeeService)::calculateFee($tradable, $order->price);
+
                             $this->orderTransactionRepository->createOrder([
                                 'buy_order_id'  => $order->type === Order::TYPE_BUY ? $order->id : $matchOrder->id,
                                 'sell_order_id' => $order->type === Order::TYPE_SELL ? $order->id : $matchOrder->id,
                                 'amount'        => $tradable,
                                 'price'         => $order->price,
+                                'fee'           => $fee,
                             ]);
 
                             $remaining -= $tradable;

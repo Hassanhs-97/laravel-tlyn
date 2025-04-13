@@ -2,7 +2,7 @@
 
 namespace App\Jobs;
 
-use App\Repositories\OrderRepositoey;
+use App\Repositories\OrderRepository;
 use App\Repositories\OrderTransactionRepository;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
@@ -23,6 +23,6 @@ class OrderMatchJob implements ShouldQueue
      */
     public function handle(): void
     {
-        (new OrderRepositoey(new OrderTransactionRepository))->matchOrders();
+        (new OrderRepository(new OrderTransactionRepository))->matchOrders();
     }
 }

@@ -7,18 +7,18 @@ use App\Http\Requests\Api\v1\Order\OrderStoreRequest;
 use App\Http\Requests\Api\v1\Order\OrderUpdateRequest;
 use App\Http\Resources\Api\V1\Order\OrderResourceCollection;
 use App\Http\Resources\Api\V1\Order\OrderResource;
-use App\Repositories\OrderRepositoey;
+use App\Repositories\OrderRepository;
 use Symfony\Component\HttpFoundation\Response;
 
 class OrderController extends Controller
 {
-    public function __construct(public OrderRepositoey $orderRepositoey) {}
+    public function __construct(public OrderRepository $orderRepository) {}
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $orders = $this->orderRepositoey->getAllOrders();
+        $orders = $this->orderRepository->getAllOrders();
 
         return response()->json(
             [
@@ -34,7 +34,7 @@ class OrderController extends Controller
      */
     public function store(OrderStoreRequest $request)
     {
-        $order = $this->orderRepositoey->createOrder($request->validated());
+        $order = $this->orderRepository->createOrder($request->validated());
 
         if ($order) {
             (new \App\Jobs\OrderMatchJob())
@@ -66,7 +66,7 @@ class OrderController extends Controller
      */
     public function update(OrderUpdateRequest $request, string $id)
     {
-        $order = $this->orderRepositoey->updateOrder($id, $request->validated());
+        $order = $this->orderRepository->updateOrder($id, $request->validated());
 
         if ($order) {
             return response()->json(
@@ -89,7 +89,7 @@ class OrderController extends Controller
 
     public function matchOrders()
     {
-        $this->orderRepositoey->matchOrders();
+        $this->orderRepository->matchOrders();
         return __('success');
     }
 }
